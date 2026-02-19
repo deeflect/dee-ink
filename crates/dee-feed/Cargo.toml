@@ -1,0 +1,35 @@
+[package]
+autobins = false
+name = "dee-feed"
+version = "0.1.0"
+edition = "2021"
+description = "Part of dee.ink CLI tools"
+license = "MIT"
+repository = "https://github.com/deeflect/dee-ink"
+homepage = "https://dee.ink"
+authors = ["Dee <dee@deeflect.com>"]
+
+[[bin]]
+name = "dee-feed"
+path = "src/main.rs"
+
+[dependencies]
+clap = { version = "4.5", features = ["derive", "color"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+toml = "1.0"
+feed-rs = "2"
+reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls"] }
+tokio = { version = "1", features = ["full"] }
+rusqlite = { version = "0.32.1", features = ["bundled"] }
+rusqlite_migration = "1.2"
+anyhow = "1"
+thiserror = "2"
+chrono = { version = "0.4", features = ["serde"] }
+dirs = "5"
+owo-colors = "4"
+
+[dev-dependencies]
+assert_cmd = "2"
+predicates = "3"
+tempfile = "3"

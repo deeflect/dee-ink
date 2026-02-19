@@ -11,6 +11,7 @@ Each tool is standalone and follows a shared CLI contract:
 
 | Tool crate | Binary | Purpose |
 |---|---|---|
+| `dee-feed` | `dee-feed` | RSS/Atom reader |
 
 ## Repo structure
 
