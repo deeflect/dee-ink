@@ -1,0 +1,21 @@
+# Rust
+target/
+
+# Local/private working folders (not published)
+website/
+scripts/
+docs/
+
+# Node / Website
+node_modules/
+out/
+.next/
+.vercel/
+
+# OS
+.DS_Store
+*.swp
+
+# IDE
+.idea/
+.vscode/
