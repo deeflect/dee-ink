@@ -12,6 +12,7 @@ Each tool is standalone and follows a shared CLI contract:
 | Tool crate | Binary | Purpose |
 |---|---|---|
 | `dee-feed` | `dee-feed` | RSS/Atom reader |
+| `dee-hn` | `dee-hn` | Hacker News client |
 
 ## Repo structure
 
