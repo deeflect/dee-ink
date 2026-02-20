@@ -3,4 +3,5 @@ resolver = "2"
 members = [
     "crates/dee-feed",
     "crates/dee-hn",
+    "crates/dee-openrouter",
 ]
