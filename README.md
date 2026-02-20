@@ -14,6 +14,7 @@ Each tool is standalone and follows a shared CLI contract:
 | `dee-feed` | `dee-feed` | RSS/Atom reader |
 | `dee-hn` | `dee-hn` | Hacker News client |
 | `dee-openrouter` | `dee-openrouter` | OpenRouter model/info tooling |
+| `dee-qr` | `dee-qr` | QR generate/decode |
 
 ## Repo structure
 
