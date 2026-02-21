@@ -5,4 +5,5 @@ members = [
     "crates/dee-hn",
     "crates/dee-openrouter",
     "crates/dee-qr",
+    "crates/dee-rates",
 ]
