@@ -16,6 +16,7 @@ Each tool is standalone and follows a shared CLI contract:
 | `dee-openrouter` | `dee-openrouter` | OpenRouter model/info tooling |
 | `dee-qr` | `dee-qr` | QR generate/decode |
 | `dee-rates` | `dee-rates` | Currency rates/conversion |
+| `dee-ssl` | `dee-ssl` | TLS cert inspection |
 
 ## Repo structure
 
