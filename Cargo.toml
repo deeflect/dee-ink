@@ -7,4 +7,5 @@ members = [
     "crates/dee-qr",
     "crates/dee-rates",
     "crates/dee-ssl",
+    "crates/dee-whois",
 ]

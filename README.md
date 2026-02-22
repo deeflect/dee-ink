@@ -17,6 +17,7 @@ Each tool is standalone and follows a shared CLI contract:
 | `dee-qr` | `dee-qr` | QR generate/decode |
 | `dee-rates` | `dee-rates` | Currency rates/conversion |
 | `dee-ssl` | `dee-ssl` | TLS cert inspection |
+| `dee-whois` | `dee-whois` | Domain WHOIS parser |
 
 ## Repo structure
 
