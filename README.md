@@ -18,6 +18,7 @@ Each tool is standalone and follows a shared CLI contract:
 | `dee-rates` | `dee-rates` | Currency rates/conversion |
 | `dee-ssl` | `dee-ssl` | TLS cert inspection |
 | `dee-whois` | `dee-whois` | Domain WHOIS parser |
+| `dee-wiki` | `dee-wiki` | Wikipedia lookup |
 
 ## Repo structure
 
