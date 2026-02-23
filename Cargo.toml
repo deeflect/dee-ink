@@ -9,4 +9,5 @@ members = [
     "crates/dee-ssl",
     "crates/dee-whois",
     "crates/dee-wiki",
+    "crates/dee-porkbun",
 ]
