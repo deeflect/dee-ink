@@ -20,6 +20,7 @@ Each tool is standalone and follows a shared CLI contract:
 | `dee-whois` | `dee-whois` | Domain WHOIS parser |
 | `dee-wiki` | `dee-wiki` | Wikipedia lookup |
 | `dee-porkbun` | `dee-porkbun` | Porkbun domains API CLI |
+| `dee-ph` | `dee-ph` | Philippines reference data |
 
 ## Repo structure
 
