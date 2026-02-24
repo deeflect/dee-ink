@@ -22,6 +22,7 @@ Each tool is standalone and follows a shared CLI contract:
 | `dee-porkbun` | `dee-porkbun` | Porkbun domains API CLI |
 | `dee-ph` | `dee-ph` | Philippines reference data |
 | `dee-gas` | `dee-gas` | PH fuel price checks |
+| `dee-food` | `dee-food` | PH food and market data |
 
 ## Repo structure
 

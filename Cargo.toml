@@ -12,4 +12,5 @@ members = [
     "crates/dee-porkbun",
     "crates/dee-ph",
     "crates/dee-gas",
+    "crates/dee-food",
 ]
