@@ -13,4 +13,5 @@ members = [
     "crates/dee-ph",
     "crates/dee-gas",
     "crates/dee-food",
+    "crates/dee-events",
 ]
