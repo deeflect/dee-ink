@@ -21,6 +21,7 @@ Each tool is standalone and follows a shared CLI contract:
 | `dee-wiki` | `dee-wiki` | Wikipedia lookup |
 | `dee-porkbun` | `dee-porkbun` | Porkbun domains API CLI |
 | `dee-ph` | `dee-ph` | Philippines reference data |
+| `dee-gas` | `dee-gas` | PH fuel price checks |
 
 ## Repo structure
 
