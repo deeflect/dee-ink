@@ -546,6 +546,20 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d7a1e2f27636f116493b8b860f5546edb47c8d8f8ea73e1d2a20be88e28d1fea"
 
 [[package]]
+name = "dee-arxiv"
+version = "0.1.0"
+dependencies = [
+ "assert_cmd",
+ "clap",
+ "quick-xml 0.38.4",
+ "reqwest 0.12.28",
+ "serde",
+ "serde_json",
+ "thiserror 2.0.18",
+ "urlencoding",
+]
+
+[[package]]
 name = "dee-events"
 version = "0.1.0"
 dependencies = [
@@ -957,7 +971,7 @@ checksum = "e4c0591d23efd0d595099af69a31863ac1823046b1b021e3b06ba3aae7e00991"
 dependencies = [
  "chrono",
  "mediatype",
- "quick-xml",
+ "quick-xml 0.37.5",
  "regex",
  "serde",
  "serde_json",
@@ -2104,6 +2118,16 @@ checksum = "331e97a1af0bf59823e6eadffe373d7b27f485be8748f71471c662c1f269b7fb"
 dependencies = [
  "encoding_rs",
  "memchr",
+]
+
+[[package]]
+name = "quick-xml"
+version = "0.38.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b66c2058c55a409d601666cffe35f04333cf1013010882cec174a7467cd4e21c"
+dependencies = [
+ "memchr",
+ "serde",
 ]
 
 [[package]]
