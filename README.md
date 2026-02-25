@@ -20,11 +20,7 @@ Each tool is standalone and follows a shared CLI contract:
 | `dee-whois` | `dee-whois` | Domain WHOIS parser |
 | `dee-wiki` | `dee-wiki` | Wikipedia lookup |
 | `dee-porkbun` | `dee-porkbun` | Porkbun domains API CLI |
-| `dee-ph` | `dee-ph` | Philippines reference data |
-| `dee-gas` | `dee-gas` | PH fuel price checks |
-| `dee-food` | `dee-food` | PH food and market data |
-| `dee-events` | `dee-events` | PH events lookup |
-| `dee-arxiv` | `dee-arxiv` | arXiv search and details |
+| `dee-pty` | `dee-pty` | PTY utility (spec/docs currently) |
 
 ## Repo structure
 

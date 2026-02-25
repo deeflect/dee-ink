@@ -1,18 +1,18 @@
 [workspace]
 resolver = "2"
 members = [
+    "crates/dee-arxiv",
     "crates/dee-feed",
+    "crates/dee-food",
+    "crates/dee-events",
+    "crates/dee-gas",
     "crates/dee-hn",
     "crates/dee-openrouter",
+    "crates/dee-ph",
+    "crates/dee-porkbun",
     "crates/dee-qr",
     "crates/dee-rates",
     "crates/dee-ssl",
     "crates/dee-whois",
     "crates/dee-wiki",
-    "crates/dee-porkbun",
-    "crates/dee-ph",
-    "crates/dee-gas",
-    "crates/dee-food",
-    "crates/dee-events",
-    "crates/dee-arxiv",
 ]
