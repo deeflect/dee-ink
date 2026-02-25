@@ -1,55 +1,82 @@
-# dee.ink
+<p align="center">
+  <a href="https://dee.ink"><strong>dee.ink</strong></a>
+</p>
 
-Open-source Rust CLI tools for AI agents.
+<p align="center">
+  Small Rust CLI tools that work well with LLMs.<br/>
+  Each tool does one thing, outputs JSON, and plays nice with pipes.
+</p>
 
-Each tool is standalone and follows a shared CLI contract:
-- `--json` for machine output
+<p align="center">
+  <a href="https://dee.ink">Website</a> · <a href="https://deeflect.com">Author</a> · <a href="https://x.com/deeflectcom">X</a>
+</p>
+
+---
+
+## Tools
+
+| Crate | What it does |
+|---|---|
+| [dee-feed](crates/dee-feed) | Read RSS and Atom feeds |
+| [dee-hn](crates/dee-hn) | Browse Hacker News |
+| [dee-openrouter](crates/dee-openrouter) | Compare LLM models and pricing |
+| [dee-porkbun](crates/dee-porkbun) | Manage domains via Porkbun API |
+| [dee-qr](crates/dee-qr) | Generate and decode QR codes |
+| [dee-rates](crates/dee-rates) | Currency exchange rates |
+| [dee-ssl](crates/dee-ssl) | Check SSL certs and TLS info |
+| [dee-whois](crates/dee-whois) | Domain WHOIS lookups |
+| [dee-wiki](crates/dee-wiki) | Wikipedia article lookup |
+
+## Shared contract
+
+Every tool follows the same rules:
+
+- `--json` for structured output
 - `--quiet` for minimal output
-- deterministic exit codes (`0` success, `1` failure)
+- Exit `0` on success, `1` on failure
+- Errors go to stderr, data goes to stdout
 
-## Current tools in this repository
+Full spec in [FRAMEWORK.md](FRAMEWORK.md).
 
-| Tool crate | Binary | Purpose |
-|---|---|---|
-| `dee-feed` | `dee-feed` | RSS/Atom reader |
-| `dee-hn` | `dee-hn` | Hacker News client |
-| `dee-openrouter` | `dee-openrouter` | OpenRouter model/info tooling |
-| `dee-qr` | `dee-qr` | QR generate/decode |
-| `dee-rates` | `dee-rates` | Currency rates/conversion |
-| `dee-ssl` | `dee-ssl` | TLS cert inspection |
-| `dee-whois` | `dee-whois` | Domain WHOIS parser |
-| `dee-wiki` | `dee-wiki` | Wikipedia lookup |
-| `dee-porkbun` | `dee-porkbun` | Porkbun domains API CLI |
-| `dee-pty` | `dee-pty` | PTY utility (spec/docs currently) |
-
-## Repo structure
-
-```text
-dee-ink/
-├── FRAMEWORK.md         # CLI/output contract all tools follow
-├── AGENT-DOCS-GUIDE.md  # how to write tool AGENT.md docs
-├── BUILD_ORDER.md       # roadmap/order notes
-├── MASTER-LIST.md       # longer-term tool inventory
-├── crates/
-│   └── dee-<tool>/      # standalone Cargo crate + AGENT docs
-└── *.md                 # public root docs (README, FRAMEWORK, CLAUDE, etc.)
-```
-
-## Build and test
+## Install
 
 ```bash
-cd crates/dee-feed
-cargo test
-cargo build --release
+cargo install dee-rates
 ```
 
-Run this per tool directory.
+Or build from source:
 
-## Notes
+```bash
+git clone https://github.com/deeflect/dee-ink
+cd dee-ink
+cargo build --release -p dee-rates
+```
 
-- Public source is focused on the CLI crates and root markdown docs.
-- Local `website/`, `scripts/`, and `docs/` folders are ignored in git.
+## Build
+
+Cargo workspace. Build and test everything:
+
+```bash
+cargo build --workspace
+cargo test --workspace
+```
+
+Single tool:
+
+```bash
+cargo build -p dee-feed
+cargo test -p dee-feed
+```
+
+## Repo layout
+
+```
+crates/dee-*/    Tool crates
+website/         dee.ink website (Next.js)
+FRAMEWORK.md     CLI contract spec
+CLAUDE.md        Agent instructions
+```
 
 ## License
 
-MIT
+[MIT](LICENSE)
