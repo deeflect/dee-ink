@@ -13,6 +13,7 @@ members = [
     "crates/dee-qr",
     "crates/dee-rates",
     "crates/dee-ssl",
+    "crates/dee-todo",
     "crates/dee-whois",
     "crates/dee-wiki",
 ]

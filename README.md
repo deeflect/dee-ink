@@ -24,6 +24,7 @@
 | [dee-qr](crates/dee-qr) | Generate and decode QR codes |
 | [dee-rates](crates/dee-rates) | Currency exchange rates |
 | [dee-ssl](crates/dee-ssl) | Check SSL certs and TLS info |
+| [dee-todo](crates/dee-todo) | Local task list with JSON output |
 | [dee-whois](crates/dee-whois) | Domain WHOIS lookups |
 | [dee-wiki](crates/dee-wiki) | Wikipedia article lookup |
 
