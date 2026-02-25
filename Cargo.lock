@@ -752,6 +752,22 @@ dependencies = [
 ]
 
 [[package]]
+name = "dee-timer"
+version = "0.1.0"
+dependencies = [
+ "assert_cmd",
+ "chrono",
+ "clap",
+ "dirs",
+ "predicates",
+ "rusqlite",
+ "serde",
+ "serde_json",
+ "tempfile",
+ "thiserror 2.0.18",
+]
+
+[[package]]
 name = "dee-todo"
 version = "0.1.0"
 dependencies = [

@@ -14,6 +14,7 @@ members = [
     "crates/dee-rates",
     "crates/dee-ssl",
     "crates/dee-todo",
+    "crates/dee-timer",
     "crates/dee-whois",
     "crates/dee-wiki",
 ]
