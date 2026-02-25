@@ -2,7 +2,6 @@
 target/
 
 # Local/private working folders (not published)
-website/
 scripts/
 docs/
 
