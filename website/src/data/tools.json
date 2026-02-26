@@ -10,7 +10,7 @@
   { "name": "dee-whois", "description": "domain WHOIS lookups with structured JSON output", "category": "Dev Tools", "status": "built", "github": "https://github.com/deeflect/dee-ink/tree/main/crates/dee-whois", "crate": "dee-whois" },
   { "name": "dee-wiki", "description": "look up Wikipedia articles with structured output", "category": "Data & Research", "status": "built", "github": "https://github.com/deeflect/dee-ink/tree/main/crates/dee-wiki", "crate": "dee-wiki" },
 
-  { "name": "dee-contacts", "description": "personal CRM, track people and interactions as local JSON", "category": "Productivity", "status": "planned", "github": "https://github.com/deeflect/dee-ink/tree/main/crates/dee-contacts", "crate": "dee-contacts" },
+  { "name": "dee-contacts", "description": "personal CRM, track people and interactions as local JSON", "category": "Productivity", "status": "built", "github": "https://github.com/deeflect/dee-ink/tree/main/crates/dee-contacts", "crate": "dee-contacts" },
   { "name": "dee-habit", "description": "track daily habits and streaks from the terminal", "category": "Productivity", "status": "planned", "github": "https://github.com/deeflect/dee-ink/tree/main/crates/dee-habit", "crate": "dee-habit" },
   { "name": "dee-stash", "description": "save URLs for later with auto-summaries and tags", "category": "Productivity", "status": "planned", "github": "https://github.com/deeflect/dee-ink/tree/main/crates/dee-stash", "crate": "dee-stash" },
   { "name": "dee-todo", "description": "simple task list with priorities and JSON output", "category": "Productivity", "status": "built", "github": "https://github.com/deeflect/dee-ink/tree/main/crates/dee-todo", "crate": "dee-todo" },

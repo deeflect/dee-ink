@@ -2,6 +2,7 @@
 resolver = "2"
 members = [
     "crates/dee-arxiv",
+    "crates/dee-contacts",
     "crates/dee-feed",
     "crates/dee-food",
     "crates/dee-events",
