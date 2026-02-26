@@ -26,6 +26,7 @@
 | [dee-ssl](crates/dee-ssl) | Check SSL certs and TLS info |
 | [dee-todo](crates/dee-todo) | Local task list with JSON output |
 | [dee-timer](crates/dee-timer) | Time tracking and pomodoro sessions |
+| [dee-trends](crates/dee-trends) | Google Trends interest and related queries |
 | [dee-whois](crates/dee-whois) | Domain WHOIS lookups |
 | [dee-wiki](crates/dee-wiki) | Wikipedia article lookup |
 
