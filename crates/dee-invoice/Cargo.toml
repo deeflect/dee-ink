@@ -1,0 +1,28 @@
+[package]
+autobins = false
+name = "dee-invoice"
+version = "0.1.0"
+edition = "2021"
+description = "Generate invoices from JSON or YAML and export PDF/JSON"
+license = "MIT"
+repository = "https://github.com/deeflect/dee-ink"
+homepage = "https://dee.ink"
+authors = ["Dee <dee@deeflect.com>"]
+
+[[bin]]
+name = "dee-invoice"
+path = "src/main.rs"
+
+[dependencies]
+chrono = { version = "0.4", features = ["serde"] }
+clap = { version = "4.5", features = ["derive", "color"] }
+printpdf = "0.8"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+serde_yaml = "0.9"
+thiserror = "2"
+
+[dev-dependencies]
+assert_cmd = "2"
+predicates = "3"
+tempfile = "3"

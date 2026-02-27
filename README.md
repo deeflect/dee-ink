@@ -20,6 +20,7 @@
 | [dee-feed](crates/dee-feed) | Read RSS and Atom feeds |
 | [dee-hn](crates/dee-hn) | Browse Hacker News |
 | [dee-contacts](crates/dee-contacts) | Personal CRM with interactions and import/export |
+| [dee-invoice](crates/dee-invoice) | Generate invoice PDFs from JSON or YAML |
 | [dee-openrouter](crates/dee-openrouter) | Compare LLM models and pricing |
 | [dee-porkbun](crates/dee-porkbun) | Manage domains via Porkbun API |
 | [dee-qr](crates/dee-qr) | Generate and decode QR codes |
