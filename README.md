@@ -25,6 +25,7 @@
 | [dee-qr](crates/dee-qr) | Generate and decode QR codes |
 | [dee-rates](crates/dee-rates) | Currency exchange rates |
 | [dee-ssl](crates/dee-ssl) | Check SSL certs and TLS info |
+| [dee-stash](crates/dee-stash) | Bookmark and read-later manager |
 | [dee-todo](crates/dee-todo) | Local task list with JSON output |
 | [dee-timer](crates/dee-timer) | Time tracking and pomodoro sessions |
 | [dee-trends](crates/dee-trends) | Google Trends interest and related queries |
