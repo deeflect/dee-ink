@@ -6,6 +6,7 @@ members = [
     "crates/dee-feed",
     "crates/dee-food",
     "crates/dee-invoice",
+    "crates/dee-mentions",
     "crates/dee-events",
     "crates/dee-gas",
     "crates/dee-hn",
