@@ -20,6 +20,9 @@ const TOOL: &str = "dee-feed";
     after_help = "EXAMPLES:\n  dee-feed add https://example.com/feed.xml --name \"Example\"\n  dee-feed list --json\n  dee-feed fetch --limit 20 --json\n  dee-feed read 1 --json\n  dee-feed export --format opml"
 )]
 struct Cli {
+    #[command(flatten)]
+    global: GlobalFlags,
+
     #[command(subcommand)]
     command: Commands,
 }
@@ -27,7 +30,7 @@ struct Cli {
 #[derive(Subcommand, Debug)]
 enum Commands {
     Add(AddArgs),
-    List(GlobalFlags),
+    List,
     Remove(RemoveArgs),
     Fetch(FetchArgs),
     Read(ReadArgs),
@@ -39,11 +42,11 @@ enum Commands {
 
 #[derive(Args, Debug, Clone)]
 struct GlobalFlags {
-    #[arg(short = 'j', long)]
+    #[arg(short = 'j', long, global = true)]
     json: bool,
-    #[arg(short = 'q', long)]
+    #[arg(short = 'q', long, global = true)]
     quiet: bool,
-    #[arg(short = 'v', long)]
+    #[arg(short = 'v', long, global = true)]
     verbose: bool,
 }
 
@@ -52,15 +55,11 @@ struct AddArgs {
     url: String,
     #[arg(long)]
     name: Option<String>,
-    #[command(flatten)]
-    flags: GlobalFlags,
 }
 
 #[derive(Args, Debug)]
 struct RemoveArgs {
     name_or_id: String,
-    #[command(flatten)]
-    flags: GlobalFlags,
 }
 
 #[derive(Args, Debug)]
@@ -70,15 +69,11 @@ struct FetchArgs {
     limit: usize,
     #[arg(long)]
     unread: bool,
-    #[command(flatten)]
-    flags: GlobalFlags,
 }
 
 #[derive(Args, Debug)]
 struct ReadArgs {
     item_id: i64,
-    #[command(flatten)]
-    flags: GlobalFlags,
 }
 
 #[derive(Args, Debug)]
@@ -86,8 +81,6 @@ struct MarkReadArgs {
     name_or_id: String,
     #[arg(long, default_value_t = false)]
     all: bool,
-    #[command(flatten)]
-    flags: GlobalFlags,
 }
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq, ValueEnum)]
@@ -100,15 +93,11 @@ enum ExportFormat {
 struct ExportArgs {
     #[arg(long, value_enum, default_value_t = ExportFormat::Json)]
     format: ExportFormat,
-    #[command(flatten)]
-    flags: GlobalFlags,
 }
 
 #[derive(Args, Debug)]
 struct ImportArgs {
     file: PathBuf,
-    #[command(flatten)]
-    flags: GlobalFlags,
 }
 
 #[derive(Args, Debug)]
@@ -119,7 +108,7 @@ struct ConfigArgs {
 
 #[derive(Subcommand, Debug)]
 enum ConfigCommand {
-    Show(GlobalFlags),
+    Show,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -163,24 +152,24 @@ async fn main() {
 }
 
 async fn run() -> Result<()> {
-    let cli = Cli::parse();
+    let Cli { global, command } = Cli::parse();
     let mut cfg = load_feeds()?;
     let mut conn = open_db()?;
 
-    match cli.command {
-        Commands::Add(args) => cmd_add(&mut cfg, args),
-        Commands::List(flags) => cmd_list(&cfg, flags),
-        Commands::Remove(args) => cmd_remove(&mut cfg, args),
-        Commands::Fetch(args) => cmd_fetch(&cfg, &mut conn, args).await,
-        Commands::Read(args) => cmd_read(&cfg, &mut conn, args),
-        Commands::MarkRead(args) => cmd_mark_read(&cfg, &mut conn, args),
-        Commands::Export(args) => cmd_export(&cfg, args),
-        Commands::Import(args) => cmd_import(&mut cfg, args),
-        Commands::Config(args) => cmd_config(args),
+    match command {
+        Commands::Add(args) => cmd_add(&mut cfg, &global, args),
+        Commands::List => cmd_list(&cfg, &global),
+        Commands::Remove(args) => cmd_remove(&mut cfg, &global, args),
+        Commands::Fetch(args) => cmd_fetch(&cfg, &mut conn, &global, args).await,
+        Commands::Read(args) => cmd_read(&cfg, &mut conn, &global, args),
+        Commands::MarkRead(args) => cmd_mark_read(&cfg, &mut conn, &global, args),
+        Commands::Export(args) => cmd_export(&cfg, &global, args),
+        Commands::Import(args) => cmd_import(&mut cfg, &global, args),
+        Commands::Config(args) => cmd_config(args, &global),
     }
 }
 
-fn cmd_add(cfg: &mut FeedConfig, args: AddArgs) -> Result<()> {
+fn cmd_add(cfg: &mut FeedConfig, flags: &GlobalFlags, args: AddArgs) -> Result<()> {
     let next_id = cfg.feeds.iter().map(|f| f.id).max().unwrap_or(0) + 1;
     if cfg.feeds.iter().any(|f| f.url == args.url) {
         return Err(anyhow!("Feed already exists: {}", args.url));
@@ -195,7 +184,7 @@ fn cmd_add(cfg: &mut FeedConfig, args: AddArgs) -> Result<()> {
     cfg.feeds.push(item.clone());
     save_feeds(cfg)?;
     output_q(
-        &args.flags,
+        flags,
         json!({"ok": true, "message": "Feed added", "id": item.id, "item": item}),
         &format!("Added feed #{}", next_id),
         &format!("{}", next_id),
@@ -203,7 +192,7 @@ fn cmd_add(cfg: &mut FeedConfig, args: AddArgs) -> Result<()> {
     Ok(())
 }
 
-fn cmd_list(cfg: &FeedConfig, flags: GlobalFlags) -> Result<()> {
+fn cmd_list(cfg: &FeedConfig, flags: &GlobalFlags) -> Result<()> {
     if flags.json {
         println!(
             "{}",
@@ -222,12 +211,12 @@ fn cmd_list(cfg: &FeedConfig, flags: GlobalFlags) -> Result<()> {
     Ok(())
 }
 
-fn cmd_remove(cfg: &mut FeedConfig, args: RemoveArgs) -> Result<()> {
+fn cmd_remove(cfg: &mut FeedConfig, flags: &GlobalFlags, args: RemoveArgs) -> Result<()> {
     let found = resolve_feed(cfg, &args.name_or_id)?;
     cfg.feeds.retain(|f| f.id != found.id);
     save_feeds(cfg)?;
     output_q(
-        &args.flags,
+        flags,
         json!({"ok": true, "message": "Feed removed", "id": found.id}),
         &format!("Removed {}", found.name),
         &format!("{}", found.id),
@@ -235,7 +224,12 @@ fn cmd_remove(cfg: &mut FeedConfig, args: RemoveArgs) -> Result<()> {
     Ok(())
 }
 
-async fn cmd_fetch(cfg: &FeedConfig, conn: &mut Connection, args: FetchArgs) -> Result<()> {
+async fn cmd_fetch(
+    cfg: &FeedConfig,
+    conn: &mut Connection,
+    flags: &GlobalFlags,
+    args: FetchArgs,
+) -> Result<()> {
     let scoped_feed_id: Option<i64>;
     let chosen = if let Some(target) = args.name_or_id.as_deref() {
         let feed = resolve_feed(cfg, target)?;
@@ -254,7 +248,7 @@ async fn cmd_fetch(cfg: &FeedConfig, conn: &mut Connection, args: FetchArgs) -> 
         match fetch_and_store_feed(&client, conn, feed).await {
             Ok(()) => {}
             Err(e) => {
-                if args.flags.verbose {
+                if flags.verbose {
                     eprintln!("warning: feed {} failed: {e}", feed.url);
                 }
                 // isolation: continue with remaining feeds
@@ -297,12 +291,12 @@ async fn cmd_fetch(cfg: &FeedConfig, conn: &mut Connection, args: FetchArgs) -> 
     })?;
     let items: Vec<FeedItem> = rows.collect::<rusqlite::Result<Vec<_>>>()?;
 
-    if args.flags.json {
+    if flags.json {
         println!(
             "{}",
             json!({"ok": true, "count": items.len(), "items": items})
         );
-    } else if args.flags.quiet {
+    } else if flags.quiet {
         for item in &items {
             println!("{}", item.id);
         }
@@ -365,7 +359,12 @@ async fn fetch_and_store_feed(
     Ok(())
 }
 
-fn cmd_read(cfg: &FeedConfig, conn: &mut Connection, args: ReadArgs) -> Result<()> {
+fn cmd_read(
+    cfg: &FeedConfig,
+    conn: &mut Connection,
+    flags: &GlobalFlags,
+    args: ReadArgs,
+) -> Result<()> {
     sync_feeds_cache(conn, cfg)?;
     let mut stmt = conn.prepare(
         "SELECT i.id, COALESCE(f.name, ''), i.title, i.url, i.published, i.read, i.summary \
@@ -389,22 +388,23 @@ fn cmd_read(cfg: &FeedConfig, conn: &mut Connection, args: ReadArgs) -> Result<(
     conn.execute("UPDATE items SET read=1 WHERE id=?1", params![args.item_id])?;
     item.read = true;
 
-    output(
-        &args.flags,
-        json!({"ok": true, "item": item}),
-        format!("{}", args.item_id),
-    );
+    output(flags, json!({"ok": true, "item": item}), format!("{}", args.item_id));
     Ok(())
 }
 
-fn cmd_mark_read(cfg: &FeedConfig, conn: &mut Connection, args: MarkReadArgs) -> Result<()> {
+fn cmd_mark_read(
+    cfg: &FeedConfig,
+    conn: &mut Connection,
+    flags: &GlobalFlags,
+    args: MarkReadArgs,
+) -> Result<()> {
     if !args.all {
         return Err(anyhow!("Missing required argument: --all"));
     }
     let feed = resolve_feed(cfg, &args.name_or_id)?;
     let count = conn.execute("UPDATE items SET read=1 WHERE feed_id=?1", params![feed.id])?;
     output_q(
-        &args.flags,
+        flags,
         json!({"ok": true, "message": "Marked items read", "count": count}),
         &format!("Marked {} as read", count),
         &format!("{}", count),
@@ -412,11 +412,11 @@ fn cmd_mark_read(cfg: &FeedConfig, conn: &mut Connection, args: MarkReadArgs) ->
     Ok(())
 }
 
-fn cmd_export(cfg: &FeedConfig, args: ExportArgs) -> Result<()> {
+fn cmd_export(cfg: &FeedConfig, flags: &GlobalFlags, args: ExportArgs) -> Result<()> {
     match args.format {
         ExportFormat::Json => {
             output(
-                &args.flags,
+                flags,
                 json!({"ok": true, "count": cfg.feeds.len(), "items": cfg.feeds}),
                 "Exported feeds".to_string(),
             );
@@ -436,7 +436,7 @@ fn cmd_export(cfg: &FeedConfig, args: ExportArgs) -> Result<()> {
                 .collect::<Vec<_>>()
                 .join("\n");
             let opml = format!("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<opml version=\"2.0\">\n  <head><title>dee-feed export</title></head>\n  <body>\n{}\n  </body>\n</opml>", body);
-            if args.flags.json {
+            if flags.json {
                 println!(
                     "{}",
                     json!({"ok": true, "count": cfg.feeds.len(), "opml": opml})
@@ -449,7 +449,7 @@ fn cmd_export(cfg: &FeedConfig, args: ExportArgs) -> Result<()> {
     Ok(())
 }
 
-fn cmd_import(cfg: &mut FeedConfig, args: ImportArgs) -> Result<()> {
+fn cmd_import(cfg: &mut FeedConfig, flags: &GlobalFlags, args: ImportArgs) -> Result<()> {
     let data = fs::read_to_string(&args.file)
         .with_context(|| format!("Could not read file {}", args.file.display()))?;
     let mut existing: HashSet<String> = cfg.feeds.iter().map(|f| f.url.clone()).collect();
@@ -475,23 +475,23 @@ fn cmd_import(cfg: &mut FeedConfig, args: ImportArgs) -> Result<()> {
     }
     save_feeds(cfg)?;
     output(
-        &args.flags,
+        flags,
         json!({"ok": true, "message": "Import complete", "count": added}),
         format!("Imported {} feeds", added),
     );
     Ok(())
 }
 
-fn cmd_config(args: ConfigArgs) -> Result<()> {
+fn cmd_config(args: ConfigArgs, global: &GlobalFlags) -> Result<()> {
     match args.command {
-        ConfigCommand::Show(flags) => {
+        ConfigCommand::Show => {
             let cfg_path = config_path();
             if !cfg_path.exists() {
                 ensure_dirs()?;
                 fs::write(&cfg_path, "[general]\ndefault_format = \"table\"\n")?;
             }
             let content = fs::read_to_string(&cfg_path)?;
-            if flags.json {
+            if global.json {
                 println!(
                     "{}",
                     json!({"ok": true, "item": {"path": cfg_path.display().to_string(), "content": content}})
