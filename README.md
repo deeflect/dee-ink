@@ -17,13 +17,18 @@
 
 | Crate | What it does |
 |---|---|
+| [dee-arxiv](crates/dee-arxiv) | Search academic papers on arXiv |
 | [dee-feed](crates/dee-feed) | Read RSS and Atom feeds |
+| [dee-events](crates/dee-events) | Find local events by location and date |
+| [dee-food](crates/dee-food) | Find restaurants and food spots |
+| [dee-gas](crates/dee-gas) | Check gas prices by location |
 | [dee-hn](crates/dee-hn) | Browse Hacker News |
 | [dee-contacts](crates/dee-contacts) | Personal CRM with interactions and import/export |
 | [dee-crosspost](crates/dee-crosspost) | Cross-post and schedule posts across major social platforms |
 | [dee-invoice](crates/dee-invoice) | Generate invoice PDFs from JSON or YAML |
 | [dee-mentions](crates/dee-mentions) | Track mentions across public sources |
 | [dee-openrouter](crates/dee-openrouter) | Compare LLM models and pricing |
+| [dee-ph](crates/dee-ph) | Browse Product Hunt launches |
 | [dee-porkbun](crates/dee-porkbun) | Manage domains via Porkbun API |
 | [dee-qr](crates/dee-qr) | Generate and decode QR codes |
 | [dee-rates](crates/dee-rates) | Currency exchange rates |
