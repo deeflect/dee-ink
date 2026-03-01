@@ -141,6 +141,7 @@ struct ListOk<T> {
 }
 
 fn main() {
+    let _ = rustls::crypto::ring::default_provider().install_default();
     let cli = Cli::parse();
 
     if let Err(err) = run(&cli) {
