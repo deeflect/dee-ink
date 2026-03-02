@@ -15,8 +15,7 @@ use thiserror::Error;
     name = "dee-qr",
     version,
     about = "dee-qr - QR Code Generate & Decode CLI",
-    long_about = "dee-qr - QR Code Generate & Decode CLI\n\nUSAGE:\n  dee-qr <command> [options]",
-    after_help = "COMMANDS:\n  generate   Generate a QR code from text\n  decode     Decode a QR code from an image\n\nOPTIONS:\n  -j, --json       Output as JSON\n  -q, --quiet      Suppress decorative output\n  -v, --verbose    Debug output to stderr\n  -h, --help       Show this help\n  -V, --version    Show version\n\nEXAMPLES:\n  dee-qr generate \"https://example.com\" --out qr.png\n  dee-qr generate \"hello\" --format svg --out qr.svg --json\n  dee-qr generate \"terminal demo\" --format terminal\n  dee-qr decode qr.png\n  dee-qr decode qr.png --json"
+    after_help = "EXAMPLES:\n  dee-qr generate \"https://example.com\" --out qr.png\n  dee-qr generate \"hello\" --format svg --out qr.svg --json\n  dee-qr generate \"terminal demo\" --format terminal\n  dee-qr decode qr.png\n  dee-qr decode qr.png --json"
 )]
 struct Cli {
     #[command(flatten)]
