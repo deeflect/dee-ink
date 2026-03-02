@@ -96,3 +96,30 @@ fn quiet_mode_emits_data() {
         .assert()
         .success();
 }
+
+#[test]
+fn template_json_flag_returns_enveloped_item() {
+    let out = cmd().args(["template", "--json"]).output().expect("run template");
+    assert!(out.status.success());
+
+    let stdout = String::from_utf8_lossy(&out.stdout);
+    let parsed: serde_json::Value =
+        serde_json::from_str(stdout.trim()).expect("template --json must emit JSON");
+    assert_eq!(parsed["ok"], serde_json::json!(true));
+    assert!(parsed["item"].is_object());
+}
+
+#[test]
+fn template_format_json_omits_null_option_fields() {
+    let out = cmd()
+        .args(["template", "--format", "json"])
+        .output()
+        .expect("run template json");
+    assert!(out.status.success());
+
+    let stdout = String::from_utf8_lossy(&out.stdout);
+    assert!(
+        !stdout.contains(": null"),
+        "template JSON must not contain null values"
+    );
+}

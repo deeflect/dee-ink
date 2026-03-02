@@ -87,11 +87,11 @@ struct TemplateArgs {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 struct Party {
     name: String,
-    #[serde(default)]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     email: Option<String>,
-    #[serde(default)]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     phone: Option<String>,
-    #[serde(default)]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     address: Option<String>,
 }
 
@@ -270,6 +270,14 @@ fn run(cli: &Cli) -> Result<(), AppError> {
 
 fn cmd_template(args: &TemplateArgs, global: &GlobalFlags) -> Result<(), AppError> {
     let sample = sample_invoice();
+    if global.json {
+        print_json(&ItemResponse {
+            ok: true,
+            item: sample,
+        });
+        return Ok(());
+    }
+
     match args.format {
         TemplateFormat::Json => {
             let out = serde_json::to_string_pretty(&sample).map_err(|_| AppError::Parse)?;
