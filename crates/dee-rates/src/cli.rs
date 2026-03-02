@@ -5,7 +5,7 @@ use clap::{Args, Parser, Subcommand};
     name = "dee-rates",
     version,
     about = "Currency exchange rates and conversions",
-    long_about = "dee-rates - Get live currency exchange rates and convert amounts\n\nUSAGE:\n  dee-rates <command> [options]\n\nCOMMANDS:\n  get        Get rates for a base currency\n  convert    Convert amount between currencies\n  list       List all available currency codes\n\nOPTIONS:\n  -j, --json       Output as JSON\n  -q, --quiet      Suppress decorative output\n  -v, --verbose    Debug output to stderr\n  -h, --help       Show this help\n  -V, --version    Show version\n\nEXAMPLES:\n  dee-rates get USD\n  dee-rates get USD EUR --json\n  dee-rates convert 100 USD EUR\n  dee-rates convert 100 USD EUR --json\n  dee-rates list --json"
+    after_help = "EXAMPLES:\n  dee-rates get USD\n  dee-rates get USD EUR --json\n  dee-rates convert 100 USD EUR\n  dee-rates convert 100 USD EUR --json\n  dee-rates list --json"
 )]
 pub struct Cli {
     #[command(subcommand)]
