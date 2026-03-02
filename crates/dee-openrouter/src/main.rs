@@ -15,6 +15,9 @@ const API_MODELS_URL: &str = "https://openrouter.ai/api/v1/models";
     after_help = "EXAMPLES:\n  dee-openrouter list --provider google\n  dee-openrouter list --free --limit 10 --json\n  dee-openrouter search gemini --json\n  dee-openrouter show google/gemini-2.5-pro --json\n  dee-openrouter config set openrouter.api-key sk-xxx\n  dee-openrouter config show --json\n  dee-openrouter config path"
 )]
 struct Cli {
+    #[command(flatten)]
+    output: OutputFlags,
+
     #[command(subcommand)]
     command: Commands,
 }
@@ -34,13 +37,13 @@ enum Commands {
 #[derive(Args, Debug, Clone)]
 struct OutputFlags {
     /// Output as JSON
-    #[arg(short = 'j', long)]
+    #[arg(short = 'j', long, global = true)]
     json: bool,
     /// Suppress decorative output
-    #[arg(short = 'q', long)]
+    #[arg(short = 'q', long, global = true)]
     quiet: bool,
     /// Debug output to stderr
-    #[arg(short = 'v', long)]
+    #[arg(short = 'v', long, global = true)]
     verbose: bool,
 }
 
@@ -61,16 +64,12 @@ struct ListArgs {
     /// Limit number of results
     #[arg(long)]
     limit: Option<usize>,
-    #[command(flatten)]
-    output: OutputFlags,
 }
 
 #[derive(Args, Debug)]
 struct ItemArgs {
     /// OpenRouter model id (e.g. google/gemini-2.5-pro)
     model_id: String,
-    #[command(flatten)]
-    output: OutputFlags,
 }
 
 #[derive(Args, Debug)]
@@ -80,8 +79,6 @@ struct SearchArgs {
     /// Limit number of results
     #[arg(long)]
     limit: Option<usize>,
-    #[command(flatten)]
-    output: OutputFlags,
 }
 
 #[derive(Args, Debug)]
@@ -95,7 +92,7 @@ enum ConfigCommand {
     /// Set a configuration value (e.g. openrouter.api-key <key>)
     Set(ConfigSetArgs),
     /// Show current configuration
-    Show(ShowFlags),
+    Show,
     /// Print the path to the config file
     Path,
 }
@@ -106,15 +103,6 @@ struct ConfigSetArgs {
     key: String,
     /// Value to set
     value: String,
-    #[command(flatten)]
-    output: ShowFlags,
-}
-
-#[derive(Args, Debug)]
-struct ShowFlags {
-    /// Output as JSON
-    #[arg(short = 'j', long)]
-    json: bool,
 }
 
 #[derive(Debug, Deserialize)]
@@ -209,7 +197,7 @@ struct AppConfig {
 #[tokio::main]
 async fn main() {
     let cli = Cli::parse();
-    let json_errors = command_json_mode(&cli.command);
+    let json_errors = cli.output.json;
 
     let run = dispatch(cli).await;
     if let Err(err) = run {
@@ -233,16 +221,16 @@ async fn main() {
 
 async fn dispatch(cli: Cli) -> Result<()> {
     match cli.command {
-        Commands::List(args) => handle_list(args).await,
-        Commands::Show(args) => handle_show(args).await,
-        Commands::Search(args) => handle_search(args).await,
-        Commands::Config(args) => handle_config(args),
+        Commands::List(args) => handle_list(args, &cli.output).await,
+        Commands::Show(args) => handle_show(args, &cli.output).await,
+        Commands::Search(args) => handle_search(args, &cli.output).await,
+        Commands::Config(args) => handle_config(args, &cli.output),
     }
 }
 
-async fn handle_list(args: ListArgs) -> Result<()> {
+async fn handle_list(args: ListArgs, output: &OutputFlags) -> Result<()> {
     let api_key = load_config().ok().and_then(|c| c.api_key);
-    let models = fetch_models(args.output.verbose, api_key.as_deref()).await?;
+    let models = fetch_models(output.verbose, api_key.as_deref()).await?;
     let provider_filter = args.provider.as_deref().map(str::to_lowercase);
 
     let mut items: Vec<ModelItem> = models
@@ -271,32 +259,32 @@ async fn handle_list(args: ListArgs) -> Result<()> {
         items.truncate(limit);
     }
 
-    if args.output.json {
+    if output.json {
         print_json(&SuccessList {
             ok: true,
             count: items.len(),
             items,
         })
     } else {
-        print_models_table(&items, args.output.quiet);
+        print_models_table(&items, output.quiet);
         Ok(())
     }
 }
 
-async fn handle_show(args: ItemArgs) -> Result<()> {
+async fn handle_show(args: ItemArgs, output: &OutputFlags) -> Result<()> {
     let api_key = load_config().ok().and_then(|c| c.api_key);
     let model_id = args.model_id.to_lowercase();
-    let item = fetch_models(args.output.verbose, api_key.as_deref())
+    let item = fetch_models(output.verbose, api_key.as_deref())
         .await?
         .into_iter()
         .map(normalize_model)
         .find(|item| item.id.to_lowercase() == model_id)
         .ok_or_else(|| anyhow::anyhow!(AppError::NotFound(args.model_id.clone())))?;
 
-    if args.output.json {
+    if output.json {
         print_json(&SuccessItem { ok: true, item })
     } else {
-        if !args.output.quiet {
+        if !output.quiet {
             println!("{}", item.id);
             println!("provider: {}", item.provider);
             println!("name: {}", item.name);
@@ -316,10 +304,10 @@ async fn handle_show(args: ItemArgs) -> Result<()> {
     }
 }
 
-async fn handle_search(args: SearchArgs) -> Result<()> {
+async fn handle_search(args: SearchArgs, output: &OutputFlags) -> Result<()> {
     let api_key = load_config().ok().and_then(|c| c.api_key);
     let q = args.query.to_lowercase();
-    let mut items: Vec<ModelItem> = fetch_models(args.output.verbose, api_key.as_deref())
+    let mut items: Vec<ModelItem> = fetch_models(output.verbose, api_key.as_deref())
         .await?
         .into_iter()
         .map(normalize_model)
@@ -334,19 +322,19 @@ async fn handle_search(args: SearchArgs) -> Result<()> {
         items.truncate(limit);
     }
 
-    if args.output.json {
+    if output.json {
         print_json(&SuccessList {
             ok: true,
             count: items.len(),
             items,
         })
     } else {
-        print_models_table(&items, args.output.quiet);
+        print_models_table(&items, output.quiet);
         Ok(())
     }
 }
 
-fn handle_config(args: ConfigArgs) -> Result<()> {
+fn handle_config(args: ConfigArgs, output: &OutputFlags) -> Result<()> {
     match args.command {
         ConfigCommand::Set(set_args) => {
             if set_args.key != "openrouter.api-key" {
@@ -355,7 +343,7 @@ fn handle_config(args: ConfigArgs) -> Result<()> {
             let mut cfg = load_config().unwrap_or_default();
             cfg.api_key = Some(set_args.value);
             save_config(&cfg)?;
-            if set_args.output.json {
+            if output.json {
                 print_json(&SuccessMsg {
                     ok: true,
                     message: format!("Set {}", set_args.key),
@@ -365,9 +353,9 @@ fn handle_config(args: ConfigArgs) -> Result<()> {
             }
             Ok(())
         }
-        ConfigCommand::Show(flags) => {
+        ConfigCommand::Show => {
             let cfg = load_config().unwrap_or_default();
-            if flags.json {
+            if output.json {
                 #[derive(Serialize)]
                 struct ConfigShow {
                     ok: bool,
@@ -392,7 +380,24 @@ fn handle_config(args: ConfigArgs) -> Result<()> {
             }
         }
         ConfigCommand::Path => {
-            println!("{}", config_path().display());
+            let path = config_path().display().to_string();
+            if output.json {
+                #[derive(Serialize)]
+                struct ConfigPath {
+                    ok: bool,
+                    item: ConfigPathItem,
+                }
+                #[derive(Serialize)]
+                struct ConfigPathItem {
+                    path: String,
+                }
+                print_json(&ConfigPath {
+                    ok: true,
+                    item: ConfigPathItem { path },
+                })?;
+            } else {
+                println!("{path}");
+            }
             Ok(())
         }
     }
@@ -536,19 +541,6 @@ fn print_json<T: Serialize>(value: &T) -> Result<()> {
     let output = serde_json::to_string_pretty(value)?;
     println!("{output}");
     Ok(())
-}
-
-fn command_json_mode(command: &Commands) -> bool {
-    match command {
-        Commands::List(args) => args.output.json,
-        Commands::Show(args) => args.output.json,
-        Commands::Search(args) => args.output.json,
-        Commands::Config(args) => match &args.command {
-            ConfigCommand::Set(a) => a.output.json,
-            ConfigCommand::Show(a) => a.json,
-            ConfigCommand::Path => false,
-        },
-    }
 }
 
 fn classify_error_code(err: &anyhow::Error) -> &'static str {
