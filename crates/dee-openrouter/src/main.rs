@@ -196,7 +196,7 @@ struct AppConfig {
 
 #[tokio::main]
 async fn main() {
-    let cli = Cli::parse();
+    let cli = parse_cli();
     let json_errors = cli.output.json;
 
     let run = dispatch(cli).await;
@@ -556,5 +556,37 @@ fn classify_error_code(err: &anyhow::Error) -> &'static str {
         "NETWORK_ERROR"
     } else {
         "INTERNAL_ERROR"
+    }
+}
+
+fn parse_cli() -> Cli {
+    match Cli::try_parse() {
+        Ok(cli) => cli,
+        Err(err) => handle_clap_parse_error(err),
+    }
+}
+
+fn handle_clap_parse_error(err: clap::Error) -> ! {
+    use clap::error::ErrorKind;
+
+    match err.kind() {
+        ErrorKind::DisplayHelp | ErrorKind::DisplayVersion => {
+            let _ = err.print();
+            std::process::exit(0);
+        }
+        _ => {
+            let wants_json = std::env::args().any(|arg| arg == "--json" || arg == "-j");
+            if wants_json {
+                let payload = serde_json::json!({
+                    "ok": false,
+                    "error": err.to_string().trim(),
+                    "code": "INVALID_ARGUMENT"
+                });
+                println!("{payload}");
+            } else {
+                let _ = err.print();
+            }
+            std::process::exit(2);
+        }
     }
 }

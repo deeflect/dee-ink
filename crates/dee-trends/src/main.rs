@@ -113,8 +113,8 @@ enum AppError {
     InvalidArgument(String),
     #[error("Request failed")]
     RequestFailed,
-    #[error("Upstream API error")]
-    ApiError,
+    #[error("Upstream API error: {0}")]
+    ApiError(String),
     #[error("Response parse failed")]
     ParseFailed,
     #[error("Expected data not found")]
@@ -126,7 +126,7 @@ impl AppError {
         match self {
             Self::InvalidArgument(_) => "INVALID_ARGUMENT",
             Self::RequestFailed => "REQUEST_FAILED",
-            Self::ApiError => "API_ERROR",
+            Self::ApiError(_) => "API_ERROR",
             Self::ParseFailed => "PARSE_FAILED",
             Self::NotFound => "NOT_FOUND",
         }
@@ -134,7 +134,7 @@ impl AppError {
 }
 
 fn main() {
-    let cli = Cli::parse();
+    let cli = parse_cli();
     let result = run(&cli);
 
     if let Err(err) = result {
@@ -485,7 +485,10 @@ impl TrendsApi {
             .map_err(|_| AppError::RequestFailed)?;
 
         if response.status() != StatusCode::OK {
-            return Err(AppError::ApiError);
+            return Err(AppError::ApiError(format!(
+                "HTTP {}",
+                response.status().as_u16()
+            )));
         }
 
         response.text().map_err(|_| AppError::RequestFailed)
@@ -507,6 +510,38 @@ fn print_json<T: Serialize>(value: &T) {
                 "{{\"ok\":false,\"error\":\"JSON serialization failed\",\"code\":\"SERIALIZE\"}}"
             );
             std::process::exit(1);
+        }
+    }
+}
+
+fn parse_cli() -> Cli {
+    match Cli::try_parse() {
+        Ok(cli) => cli,
+        Err(err) => handle_clap_parse_error(err),
+    }
+}
+
+fn handle_clap_parse_error(err: clap::Error) -> ! {
+    use clap::error::ErrorKind;
+
+    match err.kind() {
+        ErrorKind::DisplayHelp | ErrorKind::DisplayVersion => {
+            let _ = err.print();
+            std::process::exit(0);
+        }
+        _ => {
+            let wants_json = std::env::args().any(|arg| arg == "--json" || arg == "-j");
+            if wants_json {
+                let payload = serde_json::json!({
+                    "ok": false,
+                    "error": err.to_string().trim(),
+                    "code": "INVALID_ARGUMENT"
+                });
+                println!("{payload}");
+            } else {
+                let _ = err.print();
+            }
+            std::process::exit(2);
         }
     }
 }
