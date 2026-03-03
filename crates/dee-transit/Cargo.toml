@@ -1,30 +1,29 @@
 [package]
 autobins = false
-name = "dee-ssl"
+name = "dee-transit"
 version = "0.1.0"
 edition = "2021"
-description = "Part of dee.ink CLI tools"
+description = "Transit and route directions CLI with JSON output"
 license = "MIT"
 repository = "https://github.com/deeflect/dee-ink"
 homepage = "https://dee.ink"
 authors = ["Dee <dee@deeflect.com>"]
 
 [[bin]]
-name = "dee-ssl"
+name = "dee-transit"
 path = "src/main.rs"
 
 [dependencies]
 clap = { version = "4.5", features = ["derive", "color"] }
+dirs = "5"
+reqwest = { version = "0.13.1", features = ["blocking", "json"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
-rustls = { version = "0.23", default-features = false, features = ["ring", "std", "tls12"] }
-rustls-native-certs = "0.8"
-x509-parser = "0.16"
-anyhow = "1"
 thiserror = "2"
-chrono = { version = "0.4", features = ["serde"] }
-owo-colors = "4"
+toml = "1.0"
+urlencoding = "2"
 
 [dev-dependencies]
 assert_cmd = "2"
 predicates = "3"
+tempfile = "3"

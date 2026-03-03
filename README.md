@@ -17,26 +17,34 @@
 
 | Crate | What it does |
 |---|---|
+| [dee-amazon](crates/dee-amazon) | Search Amazon products |
 | [dee-arxiv](crates/dee-arxiv) | Search academic papers on arXiv |
 | [dee-feed](crates/dee-feed) | Read RSS and Atom feeds |
+| [dee-ebay](crates/dee-ebay) | Search eBay listings |
 | [dee-events](crates/dee-events) | Find local events by location and date |
 | [dee-food](crates/dee-food) | Find restaurants and food spots |
 | [dee-gas](crates/dee-gas) | Check gas prices by location |
+| [dee-habit](crates/dee-habit) | Track habits and streaks locally |
 | [dee-hn](crates/dee-hn) | Browse Hacker News |
 | [dee-contacts](crates/dee-contacts) | Personal CRM with interactions and import/export |
 | [dee-crosspost](crates/dee-crosspost) | Cross-post and schedule posts across major social platforms |
 | [dee-invoice](crates/dee-invoice) | Generate invoice PDFs from JSON or YAML |
 | [dee-mentions](crates/dee-mentions) | Track mentions across public sources |
 | [dee-openrouter](crates/dee-openrouter) | Compare LLM models and pricing |
+| [dee-parking](crates/dee-parking) | Find parking spots by location |
 | [dee-ph](crates/dee-ph) | Browse Product Hunt launches |
+| [dee-pricewatch](crates/dee-pricewatch) | Monitor webpage prices and detect drops |
 | [dee-porkbun](crates/dee-porkbun) | Manage domains via Porkbun API |
 | [dee-qr](crates/dee-qr) | Generate and decode QR codes |
+| [dee-receipt](crates/dee-receipt) | Extract structured receipt data from images |
+| [dee-reddit](crates/dee-reddit) | Search Reddit posts and subreddits |
 | [dee-rates](crates/dee-rates) | Currency exchange rates |
 | [dee-ssl](crates/dee-ssl) | Check SSL certs and TLS info |
 | [dee-stash](crates/dee-stash) | Bookmark and read-later manager |
 | [dee-todo](crates/dee-todo) | Local task list with JSON output |
 | [dee-timer](crates/dee-timer) | Time tracking and pomodoro sessions |
 | [dee-trends](crates/dee-trends) | Google Trends interest and related queries |
+| [dee-transit](crates/dee-transit) | Route and transit directions |
 | [dee-whois](crates/dee-whois) | Domain WHOIS lookups |
 | [dee-wiki](crates/dee-wiki) | Wikipedia article lookup |
 
