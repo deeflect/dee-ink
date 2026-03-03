@@ -150,7 +150,7 @@ function ToolRow({
 
               <div className="space-y-1.5">
                 <CopyRow text={`cargo install ${tool.crate}`} />
-                <CopyRow text={`curl -sSL dee.ink/i/${slug} | sh`} />
+                <CopyRow text={`curl -fsSL https://dee.ink/i/${slug} | sh`} />
               </div>
 
               <a

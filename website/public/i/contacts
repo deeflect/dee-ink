@@ -1,0 +1,11 @@
+#!/bin/sh
+set -eu
+
+if ! command -v cargo >/dev/null 2>&1; then
+  echo "cargo is required. Install Rust from https://rustup.rs/" >&2
+  exit 1
+fi
+
+crate="dee-contacts"
+echo "Installing dee-contacts..."
+cargo install "$crate"
