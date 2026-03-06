@@ -55,6 +55,7 @@ export default function RootLayout({
               sameAs: [
                 "https://dee.ink",
                 "https://dee.rest",
+                "https://dee.house",
                 "https://deeflect.com",
                 "https://x.com/deeflectcom",
                 "https://github.com/deeflect",
