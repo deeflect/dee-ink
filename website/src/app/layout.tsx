@@ -4,7 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "dee.ink — Small CLI tools for LLMs and humans",
   description:
-    "Small Rust CLI tools for LLMs and humans. JSON output, pipe-friendly, single-purpose.",
+    "dee.ink by Dee (Dmitrii Kargaev) — Small Rust CLI tools for LLMs and humans. JSON output, pipe-friendly, single-purpose.",
   metadataBase: new URL("https://dee.ink"),
   icons: {
     icon: "/favicon.png",
@@ -43,6 +43,25 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              name: "Dee Kargaev",
+              alternateName: ["Dmitrii Kargaev", "Dmitry Kargaev", "Dmitriy Kargaev"],
+              url: "https://deeflect.com",
+              sameAs: [
+                "https://dee.ink",
+                "https://dee.rest",
+                "https://deeflect.com",
+                "https://x.com/deeflectcom",
+                "https://github.com/deeflect",
+              ],
+            }),
+          }}
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
