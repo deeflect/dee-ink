@@ -5,6 +5,9 @@ export const metadata: Metadata = {
   title: "dee.ink — Small CLI tools for LLMs and humans",
   description:
     "dee.ink by Dee (Dmitrii Kargaev) — Small Rust CLI tools for LLMs and humans. JSON output, pipe-friendly, single-purpose.",
+  verification: {
+    google: "e7dZdH3xq5QQ8pwZ7DKNDM00fe_e-6HrFBYl5p8TeAY",
+  },
   metadataBase: new URL("https://dee.ink"),
   icons: {
     icon: "/favicon.png",
