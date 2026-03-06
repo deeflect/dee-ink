@@ -56,12 +56,16 @@ export default function RootLayout({
               alternateName: ["Dmitrii Kargaev", "Dmitry Kargaev", "Dmitriy Kargaev"],
               url: "https://deeflect.com",
               sameAs: [
+                "https://blog.deeflect.com",
                 "https://dee.ink",
                 "https://dee.rest",
                 "https://dee.house",
                 "https://deeflect.com",
                 "https://x.com/deeflectcom",
                 "https://github.com/deeflect",
+                "https://www.pinterest.com/dkargaev/",
+                "https://www.behance.net/dkargaev",
+                "https://www.linkedin.com/in/dkargaev/",
               ],
             }),
           }}
