@@ -3,12 +3,19 @@
 </p>
 
 <p align="center">
-  Small Rust CLI tools that work well with LLMs.<br/>
+  <strong>31 Rust CLI tools built for AI agents</strong><br/>
   Each tool does one thing, outputs JSON, and plays nice with pipes.
 </p>
 
 <p align="center">
-  <a href="https://dee.ink">Website</a> · <a href="https://deeflect.com">Author</a> · <a href="https://x.com/deeflectcom">X</a>
+  <img src="https://img.shields.io/badge/tools-31-blue?style=flat-square" alt="31 tools" />
+  <img src="https://img.shields.io/badge/language-Rust-orange?style=flat-square" alt="Rust" />
+  <img src="https://img.shields.io/badge/output-JSON-lightgrey?style=flat-square" alt="JSON" />
+  <img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" alt="MIT" />
+</p>
+
+<p align="center">
+  <a href="https://dee.ink">Website</a> · <a href="https://blog.deeflect.com/dee-ink/">Blog Post</a> · <a href="https://deeflect.com">Author</a> · <a href="https://x.com/deeflectcom">X</a>
 </p>
 
 ---
