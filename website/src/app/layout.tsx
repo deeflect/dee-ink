@@ -79,7 +79,7 @@ export default function RootLayout({
                 "https://dribbble.com/dkargaev",
                 "https://hackernoon.com/u/deeflect",
                 "https://substack.com/@deeflect",
-                "https://bsky.app/profile/deeflect.com",
+                "https://bsky.app/profile/deeflect.bsky.social",
                 "https://www.threads.net/@deeflect",
                 "https://www.pinterest.com/dkargaev/",
                 "https://www.amazon.com/dp/B0GTX4J124",
