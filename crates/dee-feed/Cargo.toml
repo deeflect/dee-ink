@@ -1,9 +1,9 @@
 [package]
 autobins = false
 name = "dee-feed"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
-description = "Part of dee.ink CLI tools"
+description = "RSS/Atom reader CLI for local feed tracking"
 license = "MIT"
 repository = "https://github.com/deeflect/dee-ink"
 homepage = "https://dee.ink"
