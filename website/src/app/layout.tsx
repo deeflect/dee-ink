@@ -82,7 +82,7 @@ export default function RootLayout({
                 "https://bsky.app/profile/deeflect.bsky.social",
                 "https://www.threads.net/@deeflect",
                 "https://www.pinterest.com/dkargaev/",
-                "https://www.amazon.com/stores/author/B0GTPRSGPM",
+                "https://www.amazon.com/author/deeflect",
         "https://www.amazon.com/dp/B0GTX4J124",
               ],
             }),
