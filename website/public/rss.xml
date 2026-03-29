@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>dee.ink — Small CLI Tools for LLMs and Humans</title>
+    <link>https://dee.ink</link>
+    <description>Rust CLI tools by Dmitry Kargaev. JSON output, pipe-friendly, single-purpose.</description>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 29 Mar 2026 22:00:00 GMT</lastBuildDate>
+    <atom:link href="https://dee.ink/rss.xml" rel="self" type="application/rss+xml"/>
+    <atom:link rel="hub" href="https://pubsubhubbub.appspot.com/"/>
+    <item>
+      <title>dee.ink — CLI Tools Collection by Dmitry Kargaev</title>
+      <link>https://dee.ink</link>
+      <pubDate>Sun, 29 Mar 2026 12:00:00 GMT</pubDate>
+      <guid>https://dee.ink/#tools</guid>
+      <description>Small Rust CLI tools for LLMs and humans by Dmitry Kargaev. Productivity, marketing, finance, shopping, dev tools, and data research.</description>
+    </item>
+  </channel>
+</rss>
