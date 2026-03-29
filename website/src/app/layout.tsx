@@ -83,6 +83,7 @@ export default function RootLayout({
                 "https://www.threads.net/@deeflect",
                 "https://www.pinterest.com/dkargaev/",
                 "https://www.amazon.com/author/deeflect",
+        "https://orcid.org/0009-0001-4788-2675",
         "https://www.amazon.com/dp/B0GTX4J124",
               ],
             }),
