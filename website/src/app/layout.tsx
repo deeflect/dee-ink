@@ -85,6 +85,7 @@ export default function RootLayout({
                 "https://www.amazon.com/author/deeflect",
         "https://orcid.org/0009-0001-4788-2675",
         "https://isni.org/isni/0000000530156185",
+        "https://www.wikidata.org/wiki/Q138828544",
         "https://www.amazon.com/dp/B0GTX4J124",
               ],
             }),
