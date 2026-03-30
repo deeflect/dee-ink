@@ -96,6 +96,7 @@ export default function RootLayout({
                     "https://isni.org/isni/0000000530156185",
                     "https://www.wikidata.org/wiki/Q138828544",
         "https://www.youtube.com/@deeflectcom",
+        "https://www.goodreads.com/author/show/69455077.Dmitry_Kargaev",
                   ],
                 },
                 {
