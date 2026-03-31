@@ -62,7 +62,7 @@ export default function RootLayout({
                   url: "https://www.deeflect.com",
                   image: "https://www.deeflect.com/dmitry-kargaev.jpg",
                   description: "Author, AI Engineer, and Product Designer based in Los Angeles. Author of Don't Replace Me: A Survival Guide to the AI Apocalypse. Former Lead Product Designer at VALK, a $4B+ fintech platform used by 70+ banks across 15 countries. Now builds multi-agent AI systems and ships products for founders.",
-                  jobTitle: "Author, AI Engineer & Product Designer",
+                  jobTitle: "AI Engineer, Product Designer & Author",
                   knowsLanguage: ["en", "ru"],
                   worksFor: { "@type": "ProfessionalService", "@id": "https://dee.agency/#organization", name: "Dee Agency" },
                   address: { "@type": "PostalAddress", addressLocality: "Los Angeles", addressRegion: "CA", addressCountry: "US" },
