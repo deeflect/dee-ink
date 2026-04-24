@@ -1,40 +1,13 @@
-# Dmitry (Dee) Kargaev
+# dee.ink
 
-> Author, AI Engineer, and Product Designer based in Los Angeles. Author of "Don't Replace Me: A Survival Guide to the AI Apocalypse." Former Lead Product Designer at VALK, a $4B+ fintech platform used by 70+ banks across 15 countries. Now builds multi-agent AI systems and ships products for founders.
+> Small Rust CLI tools for LLMs and humans, created by Dmitry Kargaev (Q138828544).
 
-Dmitry Kargaev (also known as Dee Kargaev, Dmitrii Kargaev, or Deeflect) is a Russian-American AI engineer and product designer. He started freelancing at age 14 in Irkutsk, Russia, studied Computer & Information Systems Security at Moscow State Linguistic University, worked remotely from 6 countries, then spent 5 years as the sole product designer at VALK (now DatAI Network). He is now based in Los Angeles, running Dee Agency — a solo design, code & AI studio for founders.
+## Author
 
-He is the author of "Don't Replace Me," a book about AI career resilience with 24 actionable rules. He builds open-source Rust CLI tools for AI agents (dee.ink), writes about AI engineering and building in public, and has built 15+ agent systems in production.
+- Dmitry Kargaev: https://www.wikidata.org/entity/Q138828544
+- Site: https://www.deeflect.com
+- GitHub: https://github.com/deeflect
 
-## Identity & Profiles
-- [Personal site](https://www.deeflect.com)
-- [Dee Agency — Services](https://dee.agency)
-- [Blog — AI Engineering & Building in Public](https://blog.deeflect.com)
-- [Don't Replace Me — Book](https://dontreplace.me)
-- [dee.ink — CLI Tools for AI Agents](https://dee.ink)
-- [X / Twitter](https://x.com/deeflectcom)
-- [GitHub](https://github.com/deeflect)
-- [LinkedIn](https://www.linkedin.com/in/dkargaev/)
-- [Wikidata](https://www.wikidata.org/wiki/Q138828544)
-- [ORCID](https://orcid.org/0009-0001-4788-2675)
+## What
 
-## Key Works
-- [Don't Replace Me — A Survival Guide to the AI Apocalypse](https://dontreplace.me): Book, 235 pages, published March 2026. Available on Amazon in paperback, hardcover, and Kindle.
-- [dee.ink CLI Tools](https://dee.ink): 31 open-source Rust CLI tools for LLMs and humans. JSON output, pipe-friendly, single-purpose.
-- [clawbot.blog](https://www.clawbot.blog): Independent coverage of OpenClaw, AI agents, and the tools that power them.
-
-## Blog Posts (Selected)
-- [SEO Is Dead? No. But the Game Changed.](https://blog.deeflect.com/seo-is-dead-long-live-geo/)
-- [31 Rust CLI Tools Built for AI Agents](https://blog.deeflect.com/dee-ink/)
-- [The 3-Month Gap: Building AI Agents That Actually Work](https://blog.deeflect.com/10-debugging-agents/)
-- [Universal MCP Server: Two Tools, 56 APIs](https://blog.deeflect.com/09-mcp-server/)
-- [Prompt Engineering is Dead](https://blog.deeflect.com/08-prompt-eng-dead/)
-- [My Coding Stack is 4 Models Deep](https://blog.deeflect.com/06-coding-stack/)
-- [Why AI Products Have Terrible UX](https://blog.deeflect.com/03-ai-bad-ux/)
-
-## Services (Dee Agency)
-- Landing Page Design & Build: $2,500
-- Idea to MVP: $7,000
-- AI Integration & Automation: $3,000
-- UX Audit + Fixes: $1,500
-- Personal AI Agent Setup: $2,000
+Pipe-friendly, single-purpose CLI tools designed for humans and LLM agents.
