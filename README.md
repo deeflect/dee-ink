@@ -108,3 +108,13 @@ CLAUDE.md        Agent instructions
 ## License
 
 [MIT](LICENSE)
+
+---
+
+### Made by
+
+Made by [Dee](https://deeflect.com). 31 small CLIs because one big tool would have been smarter, but here we are.
+
+Star if you ended up using even one of them. Open an issue if your shell breaks. PRs welcome — the framework is in `FRAMEWORK.md`.
+
+[deeflect.com](https://deeflect.com) · [Wikidata](https://www.wikidata.org/entity/Q138828544) · [LinkedIn](https://www.linkedin.com/in/dkargaev/) · [X](https://x.com/deeflectcom)
