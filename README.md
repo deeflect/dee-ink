@@ -3,12 +3,12 @@
 </p>
 
 <p align="center">
-  <strong>31 Rust CLI tools built for AI agents</strong><br/>
+  <strong>32 Rust CLI tools built for AI agents</strong><br/>
   Each tool does one thing, outputs JSON, and plays nice with pipes.
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/tools-31-blue?style=flat-square" alt="31 tools" />
+  <img src="https://img.shields.io/badge/tools-32-blue?style=flat-square" alt="32 tools" />
   <img src="https://img.shields.io/badge/language-Rust-orange?style=flat-square" alt="Rust" />
   <img src="https://img.shields.io/badge/output-JSON-lightgrey?style=flat-square" alt="JSON" />
   <img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" alt="MIT" />
@@ -38,6 +38,7 @@
 | [dee-invoice](crates/dee-invoice) | Generate invoice PDFs from JSON or YAML |
 | [dee-mentions](crates/dee-mentions) | Track mentions across public sources |
 | [dee-openrouter](crates/dee-openrouter) | Compare LLM models and pricing |
+| [dee-package](crates/dee-package) | Look up package metadata and versions |
 | [dee-parking](crates/dee-parking) | Find parking spots by location |
 | [dee-ph](crates/dee-ph) | Browse Product Hunt launches |
 | [dee-pricewatch](crates/dee-pricewatch) | Monitor webpage prices and detect drops |
@@ -113,7 +114,7 @@ CLAUDE.md        Agent instructions
 
 ### Made by
 
-Made by [Dee](https://deeflect.com). 31 small CLIs because one big tool would have been smarter, but here we are.
+Made by [Dee](https://deeflect.com). 32 small CLIs because one big tool would have been smarter, but here we are.
 
 Star if you ended up using even one of them. Open an issue if your shell breaks. PRs welcome — the framework is in `FRAMEWORK.md`.
 

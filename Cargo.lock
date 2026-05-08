@@ -1428,6 +1428,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "dee-package"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "reqwest 0.12.28",
+ "serde",
+ "serde_json",
+ "thiserror 2.0.18",
+ "urlencoding",
+]
+
+[[package]]
 name = "dee-parking"
 version = "0.1.0"
 dependencies = [
