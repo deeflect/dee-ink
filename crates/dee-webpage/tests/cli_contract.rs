@@ -57,6 +57,23 @@ fn serve_once(body: &'static str) -> String {
     format!("http://{addr}/page")
 }
 
+fn serve_once_without_content_length(body: &'static str) -> String {
+    let listener = TcpListener::bind("127.0.0.1:0").expect("bind test server");
+    let addr = listener.local_addr().expect("local addr");
+    thread::spawn(move || {
+        if let Ok((mut stream, _)) = listener.accept() {
+            let mut buffer = [0; 1024];
+            let _ = stream.read(&mut buffer);
+            let response = format!(
+                "HTTP/1.1 200 OK\r\nContent-Type: text/html; charset=utf-8\r\nConnection: close\r\n\r\n{}",
+                body
+            );
+            let _ = stream.write_all(response.as_bytes());
+        }
+    });
+    format!("http://{addr}/page")
+}
+
 fn stdout_json(args: &[String]) -> serde_json::Value {
     let output = run(args);
     assert!(
@@ -204,4 +221,21 @@ fn clap_errors_can_be_json() {
     let value: serde_json::Value = serde_json::from_slice(&output.stdout).expect("stdout JSON");
     assert_eq!(value["ok"], false);
     assert_eq!(value["code"], "INVALID_ARGUMENT");
+}
+
+#[test]
+fn max_bytes_is_enforced_without_content_length() {
+    let url = serve_once_without_content_length(PAGE);
+    let output = run(&[
+        "metadata".to_string(),
+        url,
+        "--max-bytes".to_string(),
+        "32".to_string(),
+        "--json".to_string(),
+    ]);
+    assert!(!output.status.success());
+    assert!(output.stderr.is_empty());
+    let value: serde_json::Value = serde_json::from_slice(&output.stdout).expect("stdout JSON");
+    assert_eq!(value["ok"], false);
+    assert_eq!(value["code"], "RESPONSE_TOO_LARGE");
 }

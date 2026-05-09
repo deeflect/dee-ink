@@ -5,6 +5,7 @@ use reqwest::{StatusCode, Url};
 use scraper::{ElementRef, Html, Selector};
 use serde::Serialize;
 use sha2::{Digest, Sha256};
+use std::io::Read;
 use std::time::Duration;
 
 const USER_AGENT: &str = concat!(
@@ -494,8 +495,10 @@ fn parse_response(
         return Err(AppError::HttpStatus(status.as_u16()));
     }
 
-    let bytes = response
-        .bytes()
+    let mut bytes = Vec::new();
+    response
+        .take((max_bytes as u64).saturating_add(1))
+        .read_to_end(&mut bytes)
         .map_err(|err| AppError::RequestFailed(err.to_string()))?;
     if bytes.len() > max_bytes {
         return Err(AppError::ResponseTooLarge(max_bytes));
@@ -510,7 +513,7 @@ fn parse_response(
         final_url,
         status,
         content_type,
-        bytes: bytes.to_vec(),
+        bytes,
         content_sha256,
     })
 }
@@ -775,16 +778,9 @@ fn normalize_ws(input: &str) -> String {
 }
 
 fn truncate_chars(input: &str, max_chars: usize) -> (String, bool) {
-    let mut count = 0;
-    let mut output = String::new();
-    for ch in input.chars() {
-        if count >= max_chars {
-            return (output, true);
-        }
-        output.push(ch);
-        count += 1;
-    }
-    (output, false)
+    let mut chars = input.chars();
+    let output = chars.by_ref().take(max_chars).collect();
+    (output, chars.next().is_some())
 }
 
 fn non_empty<'a>(value: &'a str, fallback: &'a str) -> &'a str {
@@ -798,10 +794,9 @@ fn non_empty<'a>(value: &'a str, fallback: &'a str) -> &'a str {
 fn print_json<T: Serialize>(value: &T) {
     match serde_json::to_string_pretty(value) {
         Ok(json) => println!("{json}"),
-        Err(_) => println!(
-            "{}",
-            r#"{"ok":false,"error":"serialization failure","code":"INTERNAL"}"#
-        ),
+        Err(_) => {
+            println!("{{\"ok\":false,\"error\":\"serialization failure\",\"code\":\"INTERNAL\"}}")
+        }
     }
 }
 
