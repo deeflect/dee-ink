@@ -3,12 +3,12 @@
 </p>
 
 <p align="center">
-  <strong>32 Rust CLI tools built for AI agents</strong><br/>
+  <strong>33 Rust CLI tools built for AI agents</strong><br/>
   Each tool does one thing, outputs JSON, and plays nice with pipes.
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/tools-32-blue?style=flat-square" alt="32 tools" />
+  <img src="https://img.shields.io/badge/tools-33-blue?style=flat-square" alt="33 tools" />
   <img src="https://img.shields.io/badge/language-Rust-orange?style=flat-square" alt="Rust" />
   <img src="https://img.shields.io/badge/output-JSON-lightgrey?style=flat-square" alt="JSON" />
   <img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" alt="MIT" />
@@ -53,6 +53,7 @@
 | [dee-timer](crates/dee-timer) | Time tracking and pomodoro sessions |
 | [dee-trends](crates/dee-trends) | Google Trends interest and related queries |
 | [dee-transit](crates/dee-transit) | Route and transit directions |
+| [dee-webpage](crates/dee-webpage) | Extract webpage metadata, text, and links |
 | [dee-whois](crates/dee-whois) | Domain WHOIS lookups |
 | [dee-wiki](crates/dee-wiki) | Wikipedia article lookup |
 
@@ -114,7 +115,7 @@ CLAUDE.md        Agent instructions
 
 ### Made by
 
-Made by [Dee](https://deeflect.com). 32 small CLIs because one big tool would have been smarter, but here we are.
+Made by [Dee](https://deeflect.com). 33 small CLIs because one big tool would have been smarter, but here we are.
 
 Star if you ended up using even one of them. Open an issue if your shell breaks. PRs welcome — the framework is in `FRAMEWORK.md`.
 

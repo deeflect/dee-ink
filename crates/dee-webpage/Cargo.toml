@@ -1,0 +1,23 @@
+[package]
+autobins = false
+name = "dee-webpage"
+version = "0.1.0"
+edition = "2021"
+description = "Webpage metadata, text, and link extraction CLI for agents"
+license = "MIT"
+repository = "https://github.com/deeflect/dee-ink"
+homepage = "https://dee.ink"
+authors = ["Dee <dee@deeflect.com>"]
+
+[[bin]]
+name = "dee-webpage"
+path = "src/main.rs"
+
+[dependencies]
+clap = { version = "4.5", features = ["derive", "color"] }
+reqwest = { version = "0.12", default-features = false, features = ["blocking", "rustls-tls"] }
+scraper = "0.23"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+sha2 = "0.10"
+thiserror = "2"

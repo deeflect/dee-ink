@@ -29,6 +29,7 @@ members = [
     "crates/dee-timer",
     "crates/dee-trends",
     "crates/dee-transit",
+    "crates/dee-webpage",
     "crates/dee-whois",
     "crates/dee-wiki",
     "crates/dee-crosspost",
