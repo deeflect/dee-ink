@@ -22,6 +22,7 @@ Commands:
 
 - `metadata <url>` — fetch status, title, meta description, canonical URL, headings, and counts
 - `text <url>` — extract readable text from `article`, `main`, `[role=main]`, or `body`
+- `markdown <url>` — extract simple Markdown from headings, paragraphs, lists, code blocks, and quotes
 - `links <url>` — extract resolved HTTP links
 
 Global flags:
@@ -38,6 +39,7 @@ Global flags:
 dee-webpage metadata https://example.com --json
 dee-webpage text https://example.com --max-chars 4000 --json
 dee-webpage text https://example.com --selector main --json
+dee-webpage markdown https://example.com --json
 dee-webpage links https://example.com --limit 50 --json
 dee-webpage links https://example.com --external --quiet
 ```

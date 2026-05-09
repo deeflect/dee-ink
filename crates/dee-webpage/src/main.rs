@@ -21,7 +21,7 @@ const DEFAULT_LINK_LIMIT: usize = 200;
     name = "dee-webpage",
     version,
     about = "Fetch webpage metadata, text, and links",
-    after_help = "EXAMPLES:\n  dee-webpage metadata https://example.com --json\n  dee-webpage text https://example.com --max-chars 4000 --json\n  dee-webpage links https://example.com --limit 50 --json\n  dee-webpage text https://example.com --quiet"
+    after_help = "EXAMPLES:\n  dee-webpage metadata https://example.com --json\n  dee-webpage text https://example.com --max-chars 4000 --json\n  dee-webpage markdown https://example.com --json\n  dee-webpage links https://example.com --limit 50 --json\n  dee-webpage text https://example.com --quiet"
 )]
 struct Cli {
     #[command(flatten)]
@@ -46,6 +46,8 @@ enum Commands {
     Metadata(FetchArgs),
     /// Extract clean readable text from article/main/body
     Text(TextArgs),
+    /// Extract simple Markdown from article/main/body
+    Markdown(TextArgs),
     /// Extract HTTP links from a page
     Links(LinksArgs),
 }
@@ -159,6 +161,18 @@ struct TextItem {
     content_sha256: String,
 }
 
+#[derive(Debug, Serialize)]
+struct MarkdownItem {
+    url: String,
+    final_url: String,
+    title: String,
+    selector: String,
+    markdown: String,
+    chars: usize,
+    truncated: bool,
+    content_sha256: String,
+}
+
 #[derive(Debug, Serialize, Clone)]
 struct LinkItem {
     source_url: String,
@@ -253,6 +267,7 @@ fn run(cli: &Cli) -> Result<(), AppError> {
     match &cli.command {
         Commands::Metadata(args) => cmd_metadata(args, &cli.global),
         Commands::Text(args) => cmd_text(args, &cli.global),
+        Commands::Markdown(args) => cmd_markdown(args, &cli.global),
         Commands::Links(args) => cmd_links(args, &cli.global),
     }
 }
@@ -319,6 +334,47 @@ fn cmd_text(args: &TextArgs, out: &GlobalArgs) -> Result<(), AppError> {
         );
         println!();
         println!("{}", item.text);
+    }
+    Ok(())
+}
+
+fn cmd_markdown(args: &TextArgs, out: &GlobalArgs) -> Result<(), AppError> {
+    validate_fetch_args(&args.url, args.timeout_secs, args.max_bytes)?;
+    if args.max_chars == 0 || args.max_chars > 1_000_000 {
+        return Err(AppError::InvalidArgument(
+            "--max-chars must be between 1 and 1000000".to_string(),
+        ));
+    }
+
+    let page = fetch_page(&args.url, args.timeout_secs, args.max_bytes, out)?;
+    let html = page.html()?;
+    let title = first_text(&html, "title")?;
+    let (selector, markdown) = extract_markdown(&html, args.selector.as_deref())?;
+    let (markdown, truncated) = truncate_chars(&markdown, args.max_chars);
+    let chars = markdown.chars().count();
+    let item = MarkdownItem {
+        url: page.requested_url,
+        final_url: page.final_url.to_string(),
+        title,
+        selector,
+        markdown,
+        chars,
+        truncated,
+        content_sha256: page.content_sha256,
+    };
+
+    if out.json {
+        print_json(&JsonItem { ok: true, item });
+    } else if out.quiet {
+        println!("{}", item.markdown);
+    } else {
+        println!("{}", non_empty(&item.title, &item.final_url));
+        println!(
+            "  selector={} chars={} truncated={}",
+            item.selector, item.chars, item.truncated
+        );
+        println!();
+        println!("{}", item.markdown);
     }
     Ok(())
 }
@@ -533,6 +589,83 @@ fn extract_text(html: &Html, selector: Option<&str>) -> Result<(String, String),
         "document".to_string(),
         normalize_ws(&html.root_element().text().collect::<Vec<_>>().join(" ")),
     ))
+}
+
+fn extract_markdown(html: &Html, selector: Option<&str>) -> Result<(String, String), AppError> {
+    if let Some(selector) = selector {
+        let parsed = parse_selector(selector)?;
+        let markdown = html
+            .select(&parsed)
+            .map(markdown_for_element)
+            .filter(|text| !text.is_empty())
+            .collect::<Vec<_>>()
+            .join("\n\n");
+        return Ok((selector.to_string(), markdown));
+    }
+
+    for candidate in ["article", "main", "[role=main]", "body"] {
+        let parsed = parse_selector(candidate)?;
+        if let Some(node) = html.select(&parsed).next() {
+            let markdown = markdown_for_element(node);
+            if !markdown.is_empty() {
+                return Ok((candidate.to_string(), markdown));
+            }
+        }
+    }
+
+    Ok((
+        "document".to_string(),
+        normalize_ws(&html.root_element().text().collect::<Vec<_>>().join(" ")),
+    ))
+}
+
+fn markdown_for_element(node: ElementRef<'_>) -> String {
+    let name = node.value().name();
+    match name {
+        "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "li" | "pre" | "blockquote" => {
+            markdown_block(node)
+        }
+        _ => {
+            let selector = match parse_selector("h1, h2, h3, h4, h5, h6, p, li, pre, blockquote") {
+                Ok(selector) => selector,
+                Err(_) => return element_text(node),
+            };
+            let blocks = node
+                .select(&selector)
+                .map(markdown_block)
+                .filter(|text| !text.is_empty())
+                .collect::<Vec<_>>();
+            if blocks.is_empty() {
+                element_text(node)
+            } else {
+                blocks.join("\n\n")
+            }
+        }
+    }
+}
+
+fn markdown_block(node: ElementRef<'_>) -> String {
+    let text = element_text(node);
+    if text.is_empty() {
+        return String::new();
+    }
+
+    match node.value().name() {
+        "h1" => format!("# {text}"),
+        "h2" => format!("## {text}"),
+        "h3" => format!("### {text}"),
+        "h4" => format!("#### {text}"),
+        "h5" => format!("##### {text}"),
+        "h6" => format!("###### {text}"),
+        "li" => format!("- {text}"),
+        "pre" => format!("```\n{text}\n```"),
+        "blockquote" => text
+            .lines()
+            .map(|line| format!("> {line}"))
+            .collect::<Vec<_>>()
+            .join("\n"),
+        _ => text,
+    }
 }
 
 fn extract_links(html: &Html, base: &Url) -> Result<Vec<LinkItem>, AppError> {

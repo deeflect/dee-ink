@@ -165,6 +165,17 @@ fn text_selector_flag_extracts_target_region() {
 }
 
 #[test]
+fn markdown_json_contract() {
+    let url = serve_once(PAGE);
+    let value = stdout_json(&["markdown".to_string(), url, "--json".to_string()]);
+    assert_eq!(value["ok"], true);
+    assert_eq!(value["item"]["selector"], "main");
+    let markdown = value["item"]["markdown"].as_str().unwrap();
+    assert!(markdown.contains("# Agent Heading"));
+    assert!(markdown.contains("Alpha text for extraction."));
+}
+
+#[test]
 fn quiet_mode_has_no_ansi_decorations() {
     let url = serve_once(PAGE);
     let output = run(&["text".to_string(), url, "--quiet".to_string()]);
