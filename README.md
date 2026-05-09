@@ -118,4 +118,6 @@ Made by [Dee](https://deeflect.com). 32 small CLIs because one big tool would ha
 
 Star if you ended up using even one of them. Open an issue if your shell breaks. PRs welcome — the framework is in `FRAMEWORK.md`.
 
+Need similar built for you? [dee.agency](https://dee.agency?utm_source=deeink&utm_medium=readme).
+
 [deeflect.com](https://deeflect.com) · [Wikidata](https://www.wikidata.org/entity/Q138828544) · [LinkedIn](https://www.linkedin.com/in/dkargaev/) · [X](https://x.com/deeflectcom)
