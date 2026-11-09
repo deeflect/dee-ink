@@ -1,10 +1,10 @@
 # dee.ink
 
-> Small Rust CLI tools for LLMs and humans, created by Dmitry Kargaev (Q138828544).
+> Small Rust CLI tools for LLMs and humans, created by Dee Kargaev (Q138828544).
 
 ## Author
 
-- Dmitry Kargaev: https://www.wikidata.org/entity/Q138828544
+- Dee Kargaev (Dmitry Kargaev): https://www.wikidata.org/entity/Q138828544
 - Site: https://www.deeflect.com
 - GitHub: https://github.com/deeflect
 
