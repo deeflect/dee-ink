@@ -117,6 +117,20 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
           rel="stylesheet"
         />
+        <script defer src="https://tail.deeflect.com/script.js" data-website-id="bad7bc40-9b1e-4079-a592-9e933528a975" data-domains="dee.ink,www.dee.ink"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `document.addEventListener("click", function (e) {
+  var a = e.target.closest && e.target.closest("a[href]");
+  if (!a || !window.umami || a.closest("[data-umami-event]")) return;
+  var u; try { u = new URL(a.href, location.href); } catch (_) { return; }
+  if (u.protocol === "mailto:") return umami.track("contact", { method: "email" });
+  if (/\\.(dmg|zip|pkg|exe|msi|appimage|deb|rpm|gz)$/i.test(u.pathname) || u.pathname.indexOf("/releases/download/") !== -1)
+    return umami.track("download", { file: u.pathname.split("/").pop() });
+  if (u.host && u.host !== location.host) umami.track("outbound", { host: u.host });
+});`,
+          }}
+        />
       </head>
       <body className="min-h-screen">{children}</body>
     </html>

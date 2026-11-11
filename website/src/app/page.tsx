@@ -36,6 +36,7 @@ export default function Home() {
         <div className="flex items-center gap-5 text-[12px] text-muted/60">
           <a
             href="https://github.com/deeflect"
+            data-umami-event="github"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 hover:text-text transition-colors"

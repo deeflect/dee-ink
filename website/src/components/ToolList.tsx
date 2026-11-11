@@ -65,6 +65,8 @@ function CopyRow({ text }: { text: string }) {
   return (
     <button
       onClick={copy}
+      data-umami-event="install_copy"
+      data-umami-event-cmd={text.split(" ")[0]}
       className="relative w-full flex items-center bg-code-bg rounded-lg px-3 py-2.5 font-mono text-[12px] hover:bg-code-bg/80 transition-colors cursor-pointer group overflow-hidden"
     >
       {splat && (
@@ -155,6 +157,7 @@ function ToolRow({
 
               <a
                 href={tool.github}
+                data-umami-event="github"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-[12px] text-muted hover:text-ink transition-colors"
