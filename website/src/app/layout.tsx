@@ -1,10 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-
-// Self-hosted at build time, so visitors make no request to Google.
-const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--font-inter" });
-const mono = JetBrains_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-jetbrains" });
 
 export const metadata: Metadata = {
   title: "dee.ink — Small CLI tools for LLMs and humans",
@@ -49,7 +44,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${mono.variable}`}>
+    <html lang="en">
       <head>
         <script
           type="application/ld+json"
@@ -111,6 +106,16 @@ export default function RootLayout({
               ],
             }),
           }}
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+          rel="stylesheet"
         />
         <script defer src="https://tail.deeflect.com/script.js" data-website-id="bad7bc40-9b1e-4079-a592-9e933528a975" data-domains="dee.ink,www.dee.ink"></script>
         <script
