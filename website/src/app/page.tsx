@@ -69,6 +69,12 @@ export default function Home() {
             </svg>
             deeflect.com
           </a>
+          <a
+            href="https://www.deeflect.com/privacy"
+            className="hover:text-text transition-colors"
+          >
+            privacy
+          </a>
         </div>
       </footer>
     </main>
